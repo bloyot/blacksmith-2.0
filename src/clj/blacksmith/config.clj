@@ -1,11 +1,13 @@
 (ns blacksmith.config
-  (:refer-clojure :exclude [get load])
+  (:refer-clojure :exclude [get])
   (:require [aero.core :as aero]
             [mount.core :as mount]))
 
 ;; load once from system environment
-(defn env []
+(defn env* []
   (or (keyword (System/getenv "BLACKSMITH_ENV")) :local))
+
+(def env (memoize env*))
 
 (defn load*
   []

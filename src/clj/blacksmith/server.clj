@@ -15,7 +15,7 @@
 
 (mount/defstate ^{:on-reload :noop} ApplicationServer
   :start
-  (jetty/run-jetty app {:port 3000 :join? false})
+  (jetty/run-jetty #'app {:port 3000 :join? false})
   :stop (when instance? Server ApplicationServer
               (.stop ApplicationServer)))
 

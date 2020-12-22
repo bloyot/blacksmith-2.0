@@ -1,5 +1,9 @@
-{:db-spec {:classname "org.h2.Driver"
+{:db-spec {;; for jdbc next
+           :dbtype #profile {:local "h2:mem"} 
+           :dbname "blacksmith"
+           ;; migration db spec
+           :classname #profile {:local "org.h2.Driver"}
            :subprotocol #profile {:local "h2:mem"}
-           :subname "blacksmith;DB_CLOSE_DELAY=-1"
-           :user "sa"
+           :subname #profile {:local "blacksmith;DB_CLOSE_DELAY=-1"}
+           :user #profile {:local "sa"}
            :password ""}}
