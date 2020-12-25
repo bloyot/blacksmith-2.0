@@ -63,16 +63,22 @@
                                    :cha (:base-cha c)})
       (dissoc :base-str :base-dex :base-con :base-int :base-wis :base-cha)))
 
+(defn rs->character
+  "Map a result set to a character"
+  [rs]
+  (-> rs
+     map-base-ability-scores
+     (join-with get-classes-query :classes)
+     (join-with get-saves-query :save-proficiencies #(flatten (map vals %)))
+     (join-with get-skills-query :skill-proficiencies #(flatten (map vals %)))))
+
 (defn get-all
-  [] 
-  (db/execute! [get-all-query]))
+  []
+  ;; TODO fix the n+1 problem by loading all the sub queries together
+  (map rs->character (db/execute! [get-all-query])))
 
 (defn get-one
   "Returns the character, or nil if not found in the db"
   [id]
-  (when-let [character (db/execute-one! [get-one-query id])]
-    (-> character
-     map-base-ability-scores
-     (join-with get-classes-query :classes)
-     (join-with get-saves-query :save-proficiencies #(flatten (map vals %)))
-     (join-with get-skills-query :skill-proficiencies #(flatten (map vals %))))))
+  (when-let [rs (db/execute-one! [get-one-query id])]
+    (rs->character rs)))

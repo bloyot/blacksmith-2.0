@@ -2,31 +2,37 @@
   (:require [blacksmith.character :as character]
             [blacksmith.response :as response]
             [compojure.core :refer [defroutes GET]]
+            [compojure.route :as route]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [ring.middleware.defaults :as defaults]))
 
-(defroutes routes
+(defroutes app-routes
   (GET "/character/:id" [id] (response/one (character/get-one id)))
-  (GET "/character" [] (response/paged (character/get-all))))
+  (GET "/character" [] (response/paged (character/get-all)))
+  (route/resources "/"))
 
-(defn wrap-ignore-favicon-request
+;; TODO this is maybe not actually the way to do this???
+;; Might cause problems with client side routing stuff
+(defn wrap-root
+  "Return index.html content for requests to the root uri"
   [handler]
-  (fn [request]
-    (if (= (:uri request) "/favicon.ico")
-      {:status 404}
-      (handler request))))
+  (fn [req]
+    (println (:uri req))
+    (handler (update-in req [:uri]
+                      #(if (= "/" %) "/index.html" %)))))
 
 (defn api-handler
   [handler]
   (-> handler
       (defaults/wrap-defaults defaults/api-defaults)
       wrap-json-response
-      wrap-json-body
-      wrap-ignore-favicon-request))
+      wrap-json-body))
 
 (defn site-handler
   [handler]
-  (defaults/wrap-defaults handler defaults/site-defaults))
+  (-> handler
+      (defaults/wrap-defaults defaults/site-defaults)
+      wrap-root))
 
 (def handler
-  (site-handler (api-handler routes)))
+  (site-handler (api-handler app-routes)))

@@ -14,7 +14,7 @@
 
 (defn one
   [content]
-  (if one
+  (if content
     (ok content)
     (not-found)))
 
