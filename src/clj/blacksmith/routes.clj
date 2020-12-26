@@ -1,25 +1,24 @@
 (ns blacksmith.routes
   (:require [blacksmith.character :as character]
             [blacksmith.response :as response]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [context defroutes GET]]
             [compojure.route :as route]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [ring.middleware.defaults :as defaults]))
 
-(defroutes app-routes
-  (GET "/character/:id" [id] (response/one (character/get-one id)))
-  (GET "/character" [] (response/paged (character/get-all)))
-  (route/resources "/"))
-
-;; TODO this is maybe not actually the way to do this???
-;; Might cause problems with client side routing stuff
-(defn wrap-root
+(defn index-handler
   "Return index.html content for requests to the root uri"
-  [handler]
-  (fn [req]
-    (println (:uri req))
-    (handler (update-in req [:uri]
-                      #(if (= "/" %) "/index.html" %)))))
+  [req]
+  {:status 200
+   :headers {"Content-Type" "text/html"}
+   :body (slurp "resources/public/index.html")})
+
+(defroutes app-routes
+  (context "/v1" []
+           (GET "/character/:id" [id] (response/one (character/get-one id)))
+           (GET "/character" [] (response/paged (character/get-all))))
+  (GET "/app/:view{.*}" req (index-handler req))
+  (route/resources "/"))
 
 (defn api-handler
   [handler]
@@ -31,8 +30,7 @@
 (defn site-handler
   [handler]
   (-> handler
-      (defaults/wrap-defaults defaults/site-defaults)
-      wrap-root))
+      (defaults/wrap-defaults defaults/site-defaults)))
 
 (def handler
   (site-handler (api-handler app-routes)))

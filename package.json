@@ -34,13 +34,14 @@
     "zprint-clj": "~0.8.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "autoprefixer": "^10.1.0",
     "create-react-class": "~15.6.3",
     "postcss": "^8.2.1",
     "postcss-cli": "^8.3.1",
     "react": "~16.8.0",
     "react-dom": "~16.8.0",
-    "tailwindcss": "^2.0.2",
-    "react-highlight.js": "1.0.7"
+    "react-highlight.js": "1.0.7",
+    "tailwindcss": "^2.0.2"
   }
 }

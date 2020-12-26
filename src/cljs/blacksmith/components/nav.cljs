@@ -24,6 +24,6 @@
 
      ;; right div
      [:div {:class "absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"}
-      [:button {:class "bg-blue-700 m-1 px-3 py-2 rounded-lg text-gray-300 hover:text-white focus:outline-none"} "Login"]
+      [:button {:class "button-primary"} "Login"]
       [:button {:class "bg-purple-700 m-1 px-3 py-2 rounded-lg text-gray-300 hover:text-white focus:outline-none"} "Sign up"]  
       [:div {:class "ml-3 relative"}]]]]])
