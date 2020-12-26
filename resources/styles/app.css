@@ -2,6 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.button-primary {
-    @apply bg-blue-500 m-1 px-3 py-2 rounded-lg text-white hover:text-white focus:outline-none;
-}
