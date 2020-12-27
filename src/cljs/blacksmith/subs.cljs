@@ -9,9 +9,8 @@
 (rf/reg-sub
  ::character
  (fn [db [_ id]]
-   (println "in sub " (first (filter #(= id (:id %)) (get-in db [:characters :data :content]))))
    (or (get-in db [:character :data])
-       (first (filter #(= id (:id %)) (get-in db [:characters :data :content]))))))
+       (first (filter #(= id (str (:id %))) (get-in db [:characters :data :content]))))))
 
 (rf/reg-sub
  ::fetch
