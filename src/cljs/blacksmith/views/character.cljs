@@ -1,4 +1,4 @@
-(ns blacksmith.views.characters
+(ns blacksmith.views.character
   (:require [blacksmith.character-utils :as cutils]
             [blacksmith.events :as events]
             [blacksmith.utils :as utils]
@@ -39,60 +39,31 @@
     [button {:variant "contained" :color "primary"} "New"]
     [button {:variant "contained" :color "primary"} "Import"]]])
 
-(defn attributes-panel
-  [character]
-  (let [as (:base-ability-scores character)]
-    [:div {:class "w-128"}
-     [table-container
-      [table {:size "small"}
-       [table-head
-        [table-row
-         (for [a as]
-           ^{:key (first a)} [table-cell (first a)])]]
-       [table-body
-        [table-row
-         (for [a as]
-           ^{:key (first a)} [table-cell (second a)])]]]]]))
-
-(defn character-card
-  [character]
-  [:a {:href (str "/app/character/" (:id character))}
-   [:div {:class "m-2 opacity-75 hover:opacity-100 shadow-none hover:shadow-2xl"}
-    [card
-     [card-content
-      [:div {:class "flex justify-between items-start"}
-       [typography {:variant "h5"} (:name character)]
-       [typography {:variant "subtitle1"} (cutils/details character)]]
-      [:div {:class "flex justify-between items-end"}
-       [typography {:variant "subtitle1"} (cutils/class-description character)]
-       [attributes-panel character]]]]]])
-
-(defn characters-panel
+(defn character-panel
   [characters]
   [:div {:class "p-16"}
-   (for [character (:content characters)]
-     ^{:key (:id character)} [character-card character])])
+   "foo"])
 
-(defn characters-view
+(defn character-view
   []
   (let [characters @(rf/subscribe [::subs/fetch :characters])]
     [:div {:class "p-4"}
      [header]
-     [characters-panel characters]]))
+     [character-panel characters]]))
 
-(defn- fetch-characters
-  []
-  (rf/dispatch [::events/fetch :characters (utils/request :get "/v1/character")]))
+(defn- fetch-character
+  [id]
+  (rf/dispatch
+   [::events/fetch :character (utils/request :get (str "/v1/character/" id))]))
 
 (defn view
   "Render the main view for the characters page"
   [route-params]
-  ;; dispatch the fetch for the data
-  (case @(rf/subscribe [::subs/fetch-status :characters])
-    nil (do
-          (fetch-characters)
-          [loading])
-    :error [error]
-    :in-flight [loading]
-    :complete [characters-view]))
+  (println "view")
+  (let [id (:id route-params)]
+    (if-let [character @(rf/subscribe [::subs/character id])]
+      [:div "character?"]
+      (do
+        (fetch-character id)
+        [loading]))))
 
