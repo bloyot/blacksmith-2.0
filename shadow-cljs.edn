@@ -17,4 +17,4 @@
                 [reagent "0.10.0"]
                 [re-frame "1.1.2"]]
  :nrepl {:port 3333}
- :source-paths ["src/cljs"]}
+ :source-paths ["src/cljs" "src/cljc"]}

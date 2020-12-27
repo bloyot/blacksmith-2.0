@@ -17,8 +17,8 @@
                  [ring/ring-defaults "0.3.2"]
                  [ring/ring-jetty-adapter "1.8.2"]
                  [seancorfield/next.jdbc "1.1.613"]]
-  :source-paths ["src/clj"]
-  :test-paths ["src/cljs"]
+  :source-paths ["src/clj" "src/cljc"]
+  :test-paths ["src/clj" "src/cljc"]
   :main blacksmith.server
   :profiles {:dev {:dependencies [[ring/ring-devel "1.8.2"]]
                    :source-paths ["dev"]}}
