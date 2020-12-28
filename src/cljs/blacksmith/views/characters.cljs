@@ -9,6 +9,7 @@
             [reagent-material-ui.core.card-content :refer [card-content]]
             [reagent-material-ui.core.input-base :refer [input-base]]
             [reagent-material-ui.core.link :refer [link]]
+            [reagent-material-ui.core.grid :refer [grid]]
             [reagent-material-ui.icons.search :refer [search]]
             [reagent-material-ui.core.table :refer [table]]
             [reagent-material-ui.core.table-body :refer [table-body]]
@@ -60,18 +61,16 @@
    [:div {:class "m-2 opacity-75 hover:opacity-100 shadow-none hover:shadow-2xl"}
     [card
      [card-content
-      [:div {:class "flex justify-between items-start"}
-       [typography {:variant "h5"} (:name character)]
-       [typography {:variant "subtitle1"} (cutils/details character)]]
-      [:div {:class "flex justify-between items-end"}
-       [typography {:variant "subtitle1"} (cutils/class-description character)]
-       [attributes-panel character]]]]]])
+      [typography {:variant "h5"} (:name character)]
+      [typography {:variant "subtitle1"} (cutils/class-description character)]]]]])
 
 (defn characters-panel
   [characters]
   [:div {:class "p-16"}
-   (for [character (:content characters)]
-     ^{:key (:id character)} [character-card character])])
+   [grid {:container true :spacing 3}
+    (for [character (:content characters)]
+      ^{:key (:id character)}
+      [grid {:item true :xs 3} [character-card character]])]])
 
 (defn characters-view
   []
