@@ -28,16 +28,15 @@
   [:div "loading"])
 
 (defn header
-  []
+  [character]
   [:div {:class "flex justify-between items-center"}
    [breadcrumbs
-    [link {:color "inherit" :href "/app/character"} "Characters"]]
+    [link {:color "inherit" :href "/app/character"} "Characters"]
+    [typography {:color "textPrimary"} (:name character)]]
    [:div {:class "flex space-x-2"}
-    [:div {:class "flex items-center bg-gray-200 rounded-lg px-1 space-x-2"}
-     [:div [search]]
-     [input-base {:placeholder "Search..."}]]
-    [button {:variant "contained" :color "primary"} "New"]
-    [button {:variant "contained" :color "primary"} "Import"]]])
+    [:a {:href "/app/character"}
+     [button {:variant "contained" :color "default"} "Back"]]
+    [button {:variant "contained" :color "primary"} "Edit"]]])
 
 (defn character-panel
   [characters]
@@ -45,11 +44,10 @@
    "foo"])
 
 (defn character-view
-  []
-  (let [characters @(rf/subscribe [::subs/fetch :characters])]
-    [:div {:class "p-4"}
-     [header]
-     [character-panel characters]]))
+  [character]
+  [:div {:class "p-4"}
+   [header character]
+   [character-panel character]])
 
 (defn- fetch-character
   [id]
@@ -57,12 +55,11 @@
    [::events/fetch :character (utils/request :get (str "/v1/character/" id))]))
 
 (defn view
-  "Render the main view for the characters page"
+  "Render the main view for the single character page"
   [route-params]
-  (println "view")
   (let [id (:id route-params)]
     (if-let [character @(rf/subscribe [::subs/character id])]
-      [:div "character?"]
+      [character-view character]
       (do
         (fetch-character id)
         [loading]))))
