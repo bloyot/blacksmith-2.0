@@ -11,12 +11,6 @@
             [reagent-material-ui.core.link :refer [link]]
             [reagent-material-ui.core.grid :refer [grid]]
             [reagent-material-ui.icons.search :refer [search]]
-            [reagent-material-ui.core.table :refer [table]]
-            [reagent-material-ui.core.table-body :refer [table-body]]
-            [reagent-material-ui.core.table-cell :refer [table-cell]]
-            [reagent-material-ui.core.table-container :refer [table-container]]
-            [reagent-material-ui.core.table-head :refer [table-head]]
-            [reagent-material-ui.core.table-row :refer [table-row]]
             [reagent-material-ui.core.typography :refer [typography]]
             [re-frame.core :as rf]))
 
@@ -39,21 +33,6 @@
      [input-base {:placeholder "Search..."}]]
     [button {:variant "contained" :color "primary"} "New"]
     [button {:variant "contained" :color "primary"} "Import"]]])
-
-(defn attributes-panel
-  [character]
-  (let [as (:base-ability-scores character)]
-    [:div {:class "w-128"}
-     [table-container
-      [table {:size "small"}
-       [table-head
-        [table-row
-         (for [a as]
-           ^{:key (first a)} [table-cell (first a)])]]
-       [table-body
-        [table-row
-         (for [a as]
-           ^{:key (first a)} [table-cell (second a)])]]]]]))
 
 (defn character-card
   [character]

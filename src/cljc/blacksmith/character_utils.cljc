@@ -16,3 +16,10 @@
               (->> (str/split (class character) #"\b")
                    (map str/capitalize)
                    (str/join)))))
+
+(defn as->modifier
+  "Takes an ability score and returns it's modifier (i.e. +2 or -1)"
+  [ability-score]
+  (if (< ability-score 10)
+    (quot (- (- ability-score 1) 10) 2)
+    (quot (- ability-score 10) 2)))
