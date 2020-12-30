@@ -48,52 +48,86 @@
 (defn as-value
   [[_ as-value]]
   [:span {:class "flex justify-center space-x-1"}
-   [typography {:variant "body1"} "15"]
+   [typography {:variant "body1"} as-value]
    [typography {:variant "body1" :color "textSecondary"}
     (let [as-mod (cutils/as->modifier as-value)]
       (if (<= 0 as-mod)
         (str "(+" as-mod ")")
         (str "(" as-mod ")")))]])
 
+(defn detail
+  [title value]
+  [:span {:class "flex space-x-2"}
+   [typography {:variant "subtitle2"} title]
+   [box {:border 1 :borderColor "grey.500"}
+    [:div {:class "mx-2"}
+     [typography {:variant "body1"} value]]]])
+
+(defn details-panel
+  [character]
+  [:div {:class "flex-col space-y-8 w-full px-4"}
+   [:div {:class "flex justify-center space-x-8"}
+    [detail "Proficiency Bonus" "+2"]
+    [detail "Armor Class" "15"]
+    [detail "Initiative" "+3"]]
+   [:div {:class "flex justify-center space-x-8"}
+    [detail "Speed" "30ft"]
+    [detail "Max Hit Points" (:hit-point-max character)]
+    [detail "Hit Dice" "d8"]
+    [detail "Exp." (:experience character)]]
+   [:div {:class "flex"}
+    [:div {:class "flex justify-start w-1/2"}
+     [:div {:class "flex-col"}
+      [typography {:variant "subtitle2"} "Proficiencies"]
+      [typography {:variant "body2"}
+       "All armor, shields, simple weapons, martial weapons, playing cards"]]]
+    [:div {:class "flex justify-start w-1/2"}
+     [:div {:class "flex-col"}
+      [typography {:variant "subtitle2"} "Languages"]
+      [typography {:variant "body2"} "Common, draconic, dwarvish"]]]]])
+
 (defn attributes-panel
   [character]
-  (let [bas (:base-ability-scores character)]
-    [table-container
-     [table {:size "small"}
-      [table-head
-       [table-row
-        (for [as bas]
-          ^{:key (first as)} [table-cell {:align "center"}
-                              (str/upper-case (name (first as)))])]]
-      [table-body
-       [table-row
-        (for [as bas]
-          ^{:key (first as)} [table-cell {:align "center"} [as-value as]])]]]]))
+  [:div {:class "bg-white"}
+   (let [bas (:base-ability-scores character)]
+     [table-container
+      [table {:size "small"}
+       [table-head
+        [table-row
+         (for [as bas]
+           ^{:key (first as)} [table-cell {:align "center"}
+                               (str/upper-case (name (first as)))])]]
+       [table-body
+        [table-row
+         (for [as bas]
+           ^{:key (first as)} [table-cell {:align "center"} [as-value as]])]]]])])
 
 (defn character-accordion
   [title content]
-  [accordion
+  [accordion {:defaultExpanded true}
    [accordion-summary {:expandIcon (r/as-element [expand-more])}
-    [typography title]]
+    [typography {:variant "h5"} title]]
    [accordion-details
-    "abc"]])
+    content]])
 
 (defn character-accordion-panel
   [character]
   [:div
-   [character-accordion "test1" "some-content"]
-   [character-accordion "test2" "some-other-content"]])
+   [character-accordion "Details" [details-panel character]]
+   [character-accordion "Saves and Skills" "some-other-content"]
+   [character-accordion "Spells and Abilities" "some-other-content"]
+   [character-accordion "Equipment" "some-other-content"]])
 
 (defn character-panel
   [character]
   [:div {:class "p-16 space-y-2"}
    [:div {:class "flex justify-between"}
-    [typography {:variant "h5"} (:name character)]
+    [typography {:variant "h4"} (:name character)]
     [typography {:variant "subtitle1" :color "textSecondary"}
      (cutils/class-description character)]
     [typography {:variant "subtitle1" :color "textSecondary"}
      (cutils/details character)]]
-   [box {:border 1}
+   [box {:border 1 :borderRadius 3 :borderColor "grey.500"}
     [attributes-panel character]]
    [character-accordion-panel character]])
 

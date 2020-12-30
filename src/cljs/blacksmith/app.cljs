@@ -17,9 +17,9 @@
   [:div
    [nav/nav]
    ;; background
-   [:div {:class "px-64 bg-gray-200 h-screen w-screen"}
+   [:div {:class "flex justify-center bg-gray-200 h-screen w-screen"}
     ;; content
-    [:div {:class "shadow-md bg-gray-100 h-full w-full"}
+    [:div {:class "shadow-md bg-gray-100 h-full w-3/5"}
      (if-let [view @(rf/subscribe [::subs/view])]
        [(get views (:name view)) (:route-params view)]
        [:div "initializing"])]]])
