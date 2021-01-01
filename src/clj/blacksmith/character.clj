@@ -1,13 +1,15 @@
 (ns blacksmith.character
   (:refer-clojure :exclude [get])
-  (:require [blacksmith.db :as db]))
+  (:require [blacksmith.character-utils :as cutils]
+            [blacksmith.db :as db]))
 
 (def get-all-query (str
                     "select "
                         "pc.id, pc.name, pc.base_str, pc.base_dex, "
                         "pc.base_con, pc.base_int, pc.base_wis, pc.base_cha,"
                         "pc.experience, pc.hit_point_max, r.name as race, "
-                        "a.name as alignment, b.name as background "
+                        "r.speed as speed, a.name as alignment, "
+                        "b.name as background "
                     "from player_character pc "
                         "inner join race r on pc.race = r.id "
                         "inner join alignment a on pc.alignment = a.id "
@@ -17,7 +19,8 @@
                         "pc.id, pc.name, pc.base_str, pc.base_dex, "
                         "pc.base_con, pc.base_int, pc.base_wis, pc.base_cha,"
                         "pc.experience, pc.hit_point_max, r.name as race, "
-                        "a.name as alignment, b.name as background "
+                        "r.speed as speed, a.name as alignment, "
+                        "b.name as background "
                     "from player_character pc "
                         "inner join race r on pc.race = r.id "
                         "inner join alignment a on pc.alignment = a.id "
@@ -63,6 +66,15 @@
                                    :cha (:base-cha c)})
       (dissoc :base-str :base-dex :base-con :base-int :base-wis :base-cha)))
 
+(defn- derived-stats
+  "Adds derived stats to the character"
+  [c]
+  (let [dex (get-in c [:base-ability-scores :dex])]
+    (assoc c :proficiency-bonus (cutils/char->proficiency-bonus c)
+           :initiative (cutils/as->modifier dex)
+           ;; todo add equipment bonus
+           :armor-class (+ 10 (cutils/as->modifier dex)))))
+
 (defn rs->character
   "Map a result set to a character"
   [rs]
@@ -70,7 +82,8 @@
      map-base-ability-scores
      (join-with get-classes-query :classes)
      (join-with get-saves-query :save-proficiencies #(flatten (map vals %)))
-     (join-with get-skills-query :skill-proficiencies #(flatten (map vals %)))))
+     (join-with get-skills-query :skill-proficiencies #(flatten (map vals %)))
+     derived-stats))
 
 (defn get-all
   []

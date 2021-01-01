@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS class (
 CREATE TABLE IF NOT EXISTS race (
        id INT(11) NOT NULL AUTO_INCREMENT,
        name VARCHAR(256) NOT NULL,
+       speed INT(11) NOT NULL,
        CONSTRAINT race_id_pk PRIMARY KEY (id)
 );
 

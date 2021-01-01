@@ -50,10 +50,7 @@
   [:span {:class "flex justify-center space-x-1"}
    [typography {:variant "body1"} as-value]
    [typography {:variant "body1" :color "textSecondary"}
-    (let [as-mod (cutils/as->modifier as-value)]
-      (if (<= 0 as-mod)
-        (str "(+" as-mod ")")
-        (str "(" as-mod ")")))]])
+    (str "(" (cutils/format-modifier (cutils/as->modifier as-value)) ")")]])
 
 (defn detail
   [title value]
@@ -66,22 +63,21 @@
 (defn details-panel
   [character]
   [:div {:class "flex-col space-y-8 w-full px-4"}
-   [:div {:class "flex justify-center space-x-8"}
-    [detail "Proficiency Bonus" "+2"]
-    [detail "Armor Class" "15"]
-    [detail "Initiative" "+3"]]
-   [:div {:class "flex justify-center space-x-8"}
-    [detail "Speed" "30ft"]
+   [:div {:class "flex justify-between space-x-8"}
+    [detail "Proficiency Bonus"
+     (cutils/format-modifier (:proficiency-bonus character))]
+    [detail "Armor Class" (:armor-class character)]
+    [detail "Initiative" (cutils/format-modifier (:initiative character))]
+    [detail "Speed" (str (:speed character) "ft")]
     [detail "Max Hit Points" (:hit-point-max character)]
-    [detail "Hit Dice" "d8"]
     [detail "Exp." (:experience character)]]
    [:div {:class "flex"}
-    [:div {:class "flex justify-start w-1/2"}
+    [:div {:class "flex justify-center w-1/2"}
      [:div {:class "flex-col"}
       [typography {:variant "subtitle2"} "Proficiencies"]
       [typography {:variant "body2"}
        "All armor, shields, simple weapons, martial weapons, playing cards"]]]
-    [:div {:class "flex justify-start w-1/2"}
+    [:div {:class "flex justify-center w-1/2"}
      [:div {:class "flex-col"}
       [typography {:variant "subtitle2"} "Languages"]
       [typography {:variant "body2"} "Common, draconic, dwarvish"]]]]])
@@ -140,7 +136,9 @@
 (defn- fetch-character
   [id]
   (rf/dispatch
-   [::events/fetch :character (utils/request :get (str "/v1/character/" id))]))
+   [::events/fetch
+    (utils/request :get (str "/v1/character/" id))
+    :character id]))
 
 (defn view
   "Render the main view for the single character page"

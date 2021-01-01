@@ -60,7 +60,9 @@
 
 (defn- fetch-characters
   []
-  (rf/dispatch [::events/fetch :characters (utils/request :get "/v1/character")]))
+  (rf/dispatch [::events/fetch
+                (utils/request :get "/v1/character")
+                :characters]))
 
 (defn view
   "Render the main view for the characters page"

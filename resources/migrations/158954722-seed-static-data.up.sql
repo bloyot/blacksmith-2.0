@@ -75,17 +75,17 @@ INSERT INTO class (id, name)
 VALUES (4, 'rogue');
 
 -- races --
-INSERT INTO race (id, name)
-VALUES(1, 'human');
+INSERT INTO race (id, name, speed)
+VALUES(1, 'human', 30);
 
-INSERT INTO race (id, name)
-VALUES(2, 'elf');
+INSERT INTO race (id, name, speed)
+VALUES(2, 'elf', 30);
 
-INSERT INTO race (id, name)
-VALUES(3, 'halfing');
+INSERT INTO race (id, name, speed)
+VALUES(3, 'halfing', 25);
 
-INSERT INTO race (id, name)
-VALUES (4, 'dwarf');
+INSERT INTO race (id, name, speed)
+VALUES (4, 'dwarf', 25);
 
 -- saves --
 INSERT INTO save (id, name, attribute)

@@ -10,23 +10,24 @@
 
 (rf/reg-event-fx
  ::fetch
- (fn [{db :db} [_ entity request]]
-   {:db (assoc-in db [entity :status] :in-flight)
-    :http-xhrio (assoc request
-                       :on-success [::success entity]
-                       :on-failure [::failure entity])}))
+ (fn [{db :db} [_ request & entity]]
+   (let [entity-v (vec entity)]
+     {:db (assoc-in db (flatten [entity-v :status]) :in-flight)
+      :http-xhrio (assoc request
+                         :on-success [::success entity-v]
+                         :on-failure [::failure entity-v])})))
 
 (rf/reg-event-fx
  ::success
- (fn [{db :db} [_ entity resp]]
+ (fn [{db :db} [_ entity-v resp]]
    {:db (-> db
-            (assoc-in [entity :status] :complete)
-            (assoc-in [entity :data] resp))}))
+            (assoc-in (flatten [entity-v :status]) :complete)
+            (assoc-in (flatten [entity-v :data]) resp))}))
 
 (rf/reg-event-fx
  ::failure
- (fn [{db :db} [_ entity resp]]
+ (fn [{db :db} [_ entity-v resp]]
    {:db (-> db
-            (assoc-in [entity :status] :error)
-            (update entity dissoc :data)
-            (assoc-in [entity :error] resp))}))
+            (assoc-in (flatten [entity-v :status]) :error)
+            (update-in entity-v dissoc :data)
+            (assoc-in (flatten [entity-v :error]) resp))}))
