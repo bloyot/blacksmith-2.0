@@ -40,12 +40,9 @@ CREATE TABLE IF NOT EXISTS player_character (
        experience INT(11) NOT NULL,
        hit_point_max INT(3) NOT NULL,
        CONSTRAINT player_characer_id_pk PRIMARY KEY (id),
-       FOREIGN KEY (race)
-       	  REFERENCES race(id),
-       FOREIGN KEY (background)
-       	  REFERENCES background(id),
-       FOREIGN KEY (alignment)
-       	  REFERENCES alignment(id)
+       FOREIGN KEY (race) REFERENCES race(id),
+       FOREIGN KEY (background) REFERENCES background(id),
+       FOREIGN KEY (alignment) REFERENCES alignment(id)
 );
 
 CREATE TABLE IF NOT EXISTS character_class (
@@ -56,59 +53,59 @@ CREATE TABLE IF NOT EXISTS character_class (
        FOREIGN KEY (player_character)
        	  REFERENCES player_character(id)
 	  ON DELETE CASCADE,
-       FOREIGN KEY (class)
-       	  REFERENCES class(id)
+       FOREIGN KEY (class) REFERENCES class(id)
 );
 
 CREATE TABLE IF NOT EXISTS attribute (
        id INT(11) NOT NULL AUTO_INCREMENT,
        name VARCHAR(256) NOT NULL,
-       short_name VARCHAR(256) NOT NULL,
        CONSTRAINT attribute_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS skill (
+CREATE TABLE IF NOT EXISTS proficiency_type (
        id INT(11) NOT NULL AUTO_INCREMENT,
        name VARCHAR(256) NOT NULL,
-       attribute INT(11) NOT NULL,
-       CONSTRAINT skill_pk PRIMARY KEY (id),
-       FOREIGN KEY (attribute)
-       	  REFERENCES attribute(id)
+       CONSTRAINT proficiency_type_pk PRIMARY KEY (id)
 );
 
--- many to many character -> skill prof
--- tells you which skills a character is proficient in
-CREATE TABLE IF NOT EXISTS character_skill_proficiency (
+CREATE TABLE IF NOT EXISTS proficiency (
+       id INT(11) NOT NULL AUTO_INCREMENT,
+       name VARCHAR(256) NOT NULL,
+       proficiency_type VARCHAR(256) NOT NULL,
+       attribute INT(11) NULL,
+       CONSTRAINT proficiency_pk PRIMARY KEY (id),
+       FOREIGN KEY (proficiency_type) REFERENCES proficiency_type(id),
+       FOREIGN KEY (attribute) REFERENCES attribute(id)
+);
+
+-- many to many character -> prof
+-- tells you which things a character is proficient in
+CREATE TABLE IF NOT EXISTS character_proficiency (
        player_character INT(11) NOT NULL,
-       skill INT(11) NOT NULL,
-       CONSTRAINT character_skill_pk PRIMARY KEY (player_character, skill),
+       proficiency INT(11) NOT NULL,
+       CONSTRAINT character_proficiency_pk PRIMARY KEY (player_character, proficiency),
        FOREIGN KEY (player_character)
        	       REFERENCES player_character(id)
 	       ON DELETE CASCADE,
-       FOREIGN KEY (skill)
-       	       REFERENCES skill(id)
+       FOREIGN KEY (proficiency)
+       	       REFERENCES proficiency(id)
 	       ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS save (
+CREATE TABLE IF NOT EXISTS language (
        id INT(11) NOT NULL AUTO_INCREMENT,
        name VARCHAR(256) NOT NULL,
-       attribute INT(11) NOT NULL,
-       CONSTRAINT save_pk PRIMARY KEY (id),
-       FOREIGN KEY (attribute)
-       	  REFERENCES attribute(id)
+       CONSTRAINT language_pk PRIMARY KEY (id)
 );
 
--- many to many character -> save prof
--- tells you which saves a character is proficient in
-CREATE TABLE IF NOT EXISTS character_save_proficiency (
+CREATE TABLE IF NOT EXISTS character_language (
        player_character INT(11) NOT NULL,
-       save INT(11) NOT NULL,
-       CONSTRAINT character_save_pk PRIMARY KEY (player_character, save),
+       language INT(11) NOT NULL,
+       CONSTRAINT character_language_pk PRIMARY KEY (player_character, language),
        FOREIGN KEY (player_character)
-       	       REFERENCES player_character(id)
-	       ON DELETE CASCADE,
-       FOREIGN KEY (save)
-       	       REFERENCES save(id)
-	       ON DELETE CASCADE
-); 
+               REFERENCES player_character(id)
+               ON DELETE CASCADE,
+       FOREIGN KEY (language)
+               REFERENCES language(id)
+               ON DELETE CASCADE
+);

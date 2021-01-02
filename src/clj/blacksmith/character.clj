@@ -3,6 +3,10 @@
   (:require [blacksmith.character-utils :as cutils]
             [blacksmith.db :as db]))
 
+
+;; TODO move this db stuff to it's own namespace maybe
+;; and/or use an actual sql query building library like honey
+;; or hugs
 (def get-all-query (str
                     "select "
                         "pc.id, pc.name, pc.base_str, pc.base_dex, "
@@ -33,17 +37,21 @@
                                 "inner join class c on cc.class = c.id "
                             "where cc.player_character = ?"))
 
-(def get-saves-query (str "select "
-                              "s.name "
-                          "from character_save_proficiency csp "
-                              "inner join save s on csp.save = s.id "
-                          "where player_character = ?"))
+(def get-proficiencies-query
+  (str "select "
+           "p.name, a.name as attribute, pt.name as type "
+       "from character_proficiency cp "
+           "inner join proficiency p on cp.proficiency = p.id "
+           "left outer join attribute a on p.attribute = a.id "
+           "inner join proficiency_type pt on p.proficiency_type = pt.id "
+       "where cp.player_character = ?"))
 
-(def get-skills-query (str "select "
-                               "s.name "
-                           "from character_skill_proficiency csp "
-                               "inner join skill s on csp.skill = s.id "
-                           "where player_character = ?"))
+(def get-languages-query
+  (str "select "
+           "l.name "
+       "from character_language cl "
+           "inner join language l on cl.language = l.id "
+       "where cl.player_character = ?"))
 
 (defn- join-with
   "Takes a character, and joins them with a sub entity based on the the query,
@@ -53,7 +61,7 @@
    (join-with c query k identity))
   ([c query k transform-fn]
    (assoc c k (transform-fn (db/execute! [query (:id c)])))))
-
+ 
 (defn- map-base-ability-scores
   "Put the characters base stats into a map"
   [c]
@@ -81,8 +89,8 @@
   (-> rs
      map-base-ability-scores
      (join-with get-classes-query :classes)
-     (join-with get-saves-query :save-proficiencies #(flatten (map vals %)))
-     (join-with get-skills-query :skill-proficiencies #(flatten (map vals %)))
+     (join-with get-proficiencies-query :proficiencies)
+     (join-with get-languages-query :languages #(map :name %))
      derived-stats))
 
 (defn get-all

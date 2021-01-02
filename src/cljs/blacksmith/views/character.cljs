@@ -1,6 +1,7 @@
 (ns blacksmith.views.character
   (:require [blacksmith.character-utils :as cutils]
             [blacksmith.events :as events]
+            [blacksmith.formatters :as formatters]
             [blacksmith.utils :as utils]
             [blacksmith.subs :as subs]
             [clojure.string :as str]
@@ -50,7 +51,7 @@
   [:span {:class "flex justify-center space-x-1"}
    [typography {:variant "body1"} as-value]
    [typography {:variant "body1" :color "textSecondary"}
-    (str "(" (cutils/format-modifier (cutils/as->modifier as-value)) ")")]])
+    (str "(" (formatters/modifier (cutils/as->modifier as-value)) ")")]])
 
 (defn detail
   [title value]
@@ -65,9 +66,9 @@
   [:div {:class "flex-col space-y-8 w-full px-4"}
    [:div {:class "flex justify-between space-x-8"}
     [detail "Proficiency Bonus"
-     (cutils/format-modifier (:proficiency-bonus character))]
+     (formatters/modifier (:proficiency-bonus character))]
     [detail "Armor Class" (:armor-class character)]
-    [detail "Initiative" (cutils/format-modifier (:initiative character))]
+    [detail "Initiative" (formatters/modifier (:initiative character))]
     [detail "Speed" (str (:speed character) "ft")]
     [detail "Max Hit Points" (:hit-point-max character)]
     [detail "Exp." (:experience character)]]
@@ -76,11 +77,12 @@
      [:div {:class "flex-col"}
       [typography {:variant "subtitle2"} "Proficiencies"]
       [typography {:variant "body2"}
-       "All armor, shields, simple weapons, martial weapons, playing cards"]]]
+       (formatters/misc-proficiencies character)]]]
     [:div {:class "flex justify-center w-1/2"}
      [:div {:class "flex-col"}
       [typography {:variant "subtitle2"} "Languages"]
-      [typography {:variant "body2"} "Common, draconic, dwarvish"]]]]])
+      [typography {:variant "body2"}
+       (formatters/languages character)]]]]])
 
 (defn attributes-panel
   [character]

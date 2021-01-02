@@ -17,14 +17,6 @@
                    (map str/capitalize)
                    (str/join)))))
 
-(defn format-modifier
-  "Takes a modifier value like 2 or -1 and returns the formatted string for display
-  like +2 or -1"
-  [mod]
-  (if (<= 0 mod)
-    (str "+" mod)
-    (str mod)))
-
 (defn as->modifier
   "Takes an ability score and returns it's modifier (i.e. 2 or -1)"
   [ability-score]
@@ -47,3 +39,4 @@
   [character]
   (let [level (char->level character)]
     (+ 2 (quot level 4))))
+
