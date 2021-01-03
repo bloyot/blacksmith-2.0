@@ -1,0 +1,33 @@
+(ns blacksmith.formatters
+  (:require [clojure.string :as str]))
+
+(defn modifier
+  "Takes a modifier value like 2 or -1 and returns the formatted string for display
+  like +2 or -1"
+  [mod]
+  (if (<= 0 mod)
+    (str "+" mod)
+    (str mod)))
+
+(defn misc-proficiencies
+  "Create a formatted string of non-save non-skill proficiencies
+  for display."
+  [character]
+  (let [prof-types #{"weapon" "armor" "tool" "vehicle " "other"}
+        profs (->> character
+                   :proficiencies
+                   (filter #(prof-types (:type %)))
+                   (map :name)
+                   (str/join ", ")
+                   str/capitalize)]
+    (if (= "" profs)
+      "None"
+      profs)))
+
+(defn languages
+  "Creates a formatted string of the characters languages for display"
+  [character]
+  (->> character
+      :languages
+      (map str/capitalize)
+      (str/join ", ")))
