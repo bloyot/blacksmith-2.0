@@ -31,3 +31,18 @@
       :languages
       (map str/capitalize)
       (str/join ", ")))
+
+(defn proficiency-name
+  [prof]
+  (as-> prof p
+    (name p)
+    (str/split p #"-")
+    (map str/capitalize p)
+    (str/join " " p)
+    ;; edge case since Of shouldn't be capitalized
+    (str/replace p #"Of" "of")))
+
+(defn stat
+  [stat]
+  (when stat
+    (str/capitalize (name stat))))

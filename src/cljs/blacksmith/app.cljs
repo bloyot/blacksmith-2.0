@@ -6,6 +6,7 @@
    [blacksmith.utils :as utils]
    [blacksmith.events :as events]
    [blacksmith.subs :as subs]
+   [reagent-material-ui.core.container :refer [container]]
    [re-frame.core :as rf]))
 
 (def views {:characters characters/view
@@ -14,12 +15,12 @@
 (defn app
   "Create the app shell and do initialization"
   []
-  [:div
+  [:div {:class "bg-gray-200 min-h-screen"}
    [nav/nav]
    ;; background
-   [:div {:class "flex justify-center bg-gray-200 h-screen w-screen"}
+   [container 
     ;; content
-    [:div {:class "shadow-md bg-gray-100 h-full w-3/5"}
+    [:div {:class "shadow-md bg-gray-100 min-h-screen mt-2"}
      (if-let [view @(rf/subscribe [::subs/view])]
        [(get views (:name view)) (:route-params view)]
        [:div "initializing"])]]])

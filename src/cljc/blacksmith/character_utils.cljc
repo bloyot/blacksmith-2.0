@@ -1,6 +1,32 @@
 (ns blacksmith.character-utils
   (:require [clojure.string :as str]))
 
+(def saves {:strength :str
+            :dexterity :dex
+            :constitution :con
+            :intelligence :int
+            :wisdom :wis
+            :charisma :cha})
+
+(def skills {:acrobatics :dex
+             :animal-handling :wis
+             :arcana :int
+             :athletics :str
+             :deception :cha
+             :history :int
+             :insight :wis
+             :intimidation :cha
+             :investigation :int
+             :medicine :wis
+             :nature :wis
+             :perception :cha
+             :performance :cha
+             :persuasion :cha
+             :religion :int
+             :sleight-of-hand :dex
+             :stealth :dex
+             :survival :wis})
+
 (defn class-description
   "Combine all classes together into a string"
   [character]
@@ -40,3 +66,24 @@
   (let [level (char->level character)]
     (+ 2 (quot level 4))))
 
+(defn proficient?
+  "Returns true if the character has the given proficiency"
+  [character proficiency]
+  (let [normalized-prof (-> proficiency
+                            name
+                            (str/replace #"-" " ")
+                            str/lower-case)]
+    (as-> character c
+      (:proficiencies c)
+      (map :name c)
+      (some #(= normalized-prof %) c))))
+
+(defn char->prof-modifier
+  "Takes the character and a proficiency, and returns
+  the modifier"
+  [character proficiency]
+  (let [prof? (proficient? character proficiency)
+        stat (proficiency (merge saves skills))
+        as (get-in character [:base-ability-scores stat])]
+    (+ (as->modifier as)
+       (if prof? (:proficiency-bonus character) 0))))
