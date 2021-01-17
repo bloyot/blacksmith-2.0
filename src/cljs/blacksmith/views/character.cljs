@@ -20,7 +20,6 @@
             [reagent-material-ui.core.tab :refer [tab]]
             [reagent-material-ui.core.typography :refer [typography]]
             [reagent-material-ui.icons.search :refer [search]]
-            [reagent-material-ui.icons.expand-more :refer [expand-more]]
             [reagent.core :as r]
             [re-frame.core :as rf]))
 
@@ -58,13 +57,12 @@
          [tab {:label "Proficiencies"}]
          [tab {:label "Spells and Abilities"}]
          [tab {:label "Equipment"}]]]
-       [:div 
-        [paper {:class "flex p-4 p-8"}
-         (case @selected
-           0 [character-details/panel character]
-           1 [character-proficiencies/panel character]
-           2 [:div "TODO"]
-           3 [:div "TODO"])]]])))
+       [paper 
+        (case @selected
+          0 [character-details/panel character]
+          1 [character-proficiencies/panel character]
+          2 [:div "TODO"]
+          3 [:div "TODO"])]])))
 
 (defn character-panel
   [character]

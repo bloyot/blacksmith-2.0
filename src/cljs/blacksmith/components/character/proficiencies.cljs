@@ -1,6 +1,7 @@
 (ns blacksmith.components.character.proficiencies
   (:require [blacksmith.character-utils :as cutils :refer [saves skills]]
             [blacksmith.formatters :as formatters]
+            [blacksmith.components.ui :as ui]
             [reagent-material-ui.core.grid :refer [grid]]
             [reagent-material-ui.core.radio :refer [radio]]
             [reagent-material-ui.core.typography :refer [typography]]))
@@ -20,23 +21,21 @@
       [typography {:variant "body1"} (formatters/modifier modifier)]]]))
 
 (defn proficiency-set
-  [character profs show-stat?]
-  (for [[prof stat] profs]
+  [character profs show-stat?])
+
+(defn proficiency-panel
+  [character profs show-stats?]
+  [grid {:container true :spacing 1}
+   (for [[prof stat] profs]
     (let [prof? (cutils/proficient? character prof)
           prof-mod (cutils/char->prof-modifier character prof)]
-      ^{:key prof} [item prof prof? stat show-stat? prof-mod])))
+      ^{:key prof} [item prof prof? stat show-stats? prof-mod]))])
 
 (defn panel
   [character]
-  [grid {:container true :spacing 1}
-   [grid {:item true :xs 12}
-    [:div {:class "flex justify-center pb-2"}
-     [typography {:variant "h6"} "Saving Throws"]]]
-   ;; saves
-   (proficiency-set character saves false)
-   ;; skills
-   [grid {:item true :xs 12}
-    [:div {:class "flex justify-center pb-2"}
-     [typography {:variant "h6"} "Skills"]]]
-   (proficiency-set character skills true)])
+  [:div
+   [ui/accordion
+    "Saving Throws" [proficiency-panel character saves false]]
+   [ui/accordion
+    "Skills" [proficiency-panel character skills true]]])
 

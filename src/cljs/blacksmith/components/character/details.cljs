@@ -1,5 +1,6 @@
 (ns blacksmith.components.character.details
   (:require [blacksmith.formatters :as formatters]
+            [blacksmith.components.ui :as ui]
             [reagent-material-ui.core.box :refer [box]]
             [reagent-material-ui.core.grid :refer [grid]]
             [reagent-material-ui.core.typography :refer [typography]]))
@@ -12,7 +13,7 @@
     [:div {:class "mx-2"}
      [typography {:variant "body1"} value]]]])
 
-(defn panel
+(defn detail-panel
   [character]
   [grid {:container true :spacing 3}
    [grid {:item true :xs 3}
@@ -43,3 +44,15 @@
       [typography {:variant "body2"}
        (formatters/languages character)]]]
    [grid {:item true :xs 2}]])
+
+(defn panel
+  [character]
+  [:div
+   [ui/accordion
+    "Info" [detail-panel character]]
+   [ui/accordion
+    "Attacks" "todo"]
+   [ui/accordion
+    "Race" "todo"]
+   [ui/accordion
+    "Background" "todo"]])
