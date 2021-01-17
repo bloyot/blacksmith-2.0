@@ -8,24 +8,24 @@
             :wisdom :wis
             :charisma :cha})
 
-(def skills {:acrobatics :dex
-             :animal-handling :wis
-             :arcana :int
-             :athletics :str
-             :deception :cha
-             :history :int
-             :insight :wis
-             :intimidation :cha
-             :investigation :int
-             :medicine :wis
-             :nature :wis
-             :perception :cha
-             :performance :cha
-             :persuasion :cha
-             :religion :int
-             :sleight-of-hand :dex
-             :stealth :dex
-             :survival :wis})
+(def skills (into (sorted-map) {:acrobatics :dex
+                                :animal-handling :wis
+                                :arcana :int
+                                :athletics :str
+                                :deception :cha
+                                :history :int
+                                :insight :wis
+                                :intimidation :cha
+                                :investigation :int
+                                :medicine :wis
+                                :nature :wis
+                                :perception :cha
+                                :performance :cha
+                                :persuasion :cha
+                                :religion :int
+                                :sleight-of-hand :dex
+                                :stealth :dex
+                                :survival :wis}))
 
 (defn class-description
   "Combine all classes together into a string"
