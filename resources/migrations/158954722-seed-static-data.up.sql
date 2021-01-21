@@ -190,3 +190,65 @@ VALUES (4, 'draconic');
 INSERT INTO language (id, name)
 VALUES (5, 'orcish');
 
+-- sub_classes
+-- TODO add the rest
+INSERT INTO sub_class (id, name, class)
+VALUES (1, 'champion', 1);
+
+INSERT INTO sub_class (id, name, class)
+VALUES (2, 'battle master', 1);
+
+INSERT INTO sub_class (id, name, class)
+VALUES (3, 'knowledge domain', 2);
+
+INSERT INTO sub_class (id, name, class)
+VALUES (4, 'life domain', 2);
+
+INSERT INTO sub_class (id, name, class)
+VALUES (5, 'school of abjuration', 3);
+
+INSERT INTO sub_class (id, name, class)
+VALUES (6, 'school of conjuration', 3);
+
+-- class features --
+-- TODO add the rest
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (1, 'ability score improvement - strength', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (2, 'ability score improvement - dexterity', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (3, 'ability score improvement - constitution', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (4, 'ability score improvement - intelligence', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (5, 'ability score improvement - wisdom', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (6, 'ability score improvement - charisma', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.', null, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (7, 'fighting style - archery', 'You gain a +2 bonus to attack rolls you make with ranged weapons.', 1, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (8, 'fighting style - defense', 'While you are wearing armor, you gain a +1 bonus to AC.', 1, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (9, 'fighting style - two-weapon fighting', 'When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.', 1, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (10, 'second wind', 'You have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a Bonus Action to regain Hit Points equal to 1d10 + your Fighter level. Once you use this feature, you must finish a short or Long Rest before you can use it again.', 1, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (11, 'action surge', 'Starting at 2nd Level, you can push yourself beyond your normal limits for a moment. On Your Turn, you can take one additional action on top of your regular action and a possible Bonus Action. Once you use this feature, you must finish a short or Long Rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.', 1, null);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (12, 'improved critical', 'Beginning when you choose this archetype at 3rd Level, your weapon attacks score a critical hit on a roll of 19 or 20.', 1, 1);
+
+INSERT INTO class_feature (id, name, description, class, sub_class)
+VALUES (13, 'extra attack', 'Beginning at 5th Level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn. The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.
+', 1, null);
+

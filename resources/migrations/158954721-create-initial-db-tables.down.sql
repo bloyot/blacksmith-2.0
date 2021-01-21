@@ -10,5 +10,9 @@ DROP TABLE IF EXISTS alignment;
 DROP TABLE IF EXISTS language;
 DROP TABLE IF EXISTS background;
 DROP TABLE IF EXISTS race;
+DROP TABLE IF EXISTS character_class_feature;
+DROP TABLE IF EXISTS class_feature;
+DROP TABLE IF EXISTS sub_class;
 DROP TABLE IF EXISTS class;
+
 

@@ -7,3 +7,6 @@ TRUNCATE TABLE language;
 TRUNCATE TABLE background;
 TRUNCATE TABLE class;
 TRUNCATE TABLE race;
+TRUNCATE TABLE sub_class;
+TRUNCATE TABLE class_feature;
+TRUNCATE TABLE character_class_feature;

@@ -6,6 +6,16 @@ CREATE TABLE IF NOT EXISTS class (
        CONSTRAINT class_id_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS sub_class (
+       id INT(11) NOT NULL AUTO_INCREMENT,
+       name VARCHAR(256) NOT NULL,
+       class INT(11) NOT NULL,
+       CONSTRAINT sub_class_id_pk PRIMARY KEY (id),
+       FOREIGN KEY (class)
+       	  REFERENCES class(id)
+	  ON DELETE CASCADE,
+);
+
 CREATE TABLE IF NOT EXISTS race (
        id INT(11) NOT NULL AUTO_INCREMENT,
        name VARCHAR(256) NOT NULL,
@@ -48,12 +58,14 @@ CREATE TABLE IF NOT EXISTS player_character (
 CREATE TABLE IF NOT EXISTS character_class (
        player_character INT(11) NOT NULL,
        class INT(11) NOT NULL,
+       sub_class INT(11),
        class_level INT(2) NOT NULL,
        CONSTRAINT character_class_id_pk PRIMARY KEY (player_character, class),
        FOREIGN KEY (player_character)
        	  REFERENCES player_character(id)
 	  ON DELETE CASCADE,
-       FOREIGN KEY (class) REFERENCES class(id)
+       FOREIGN KEY (class) REFERENCES class(id),
+       FOREIGN KEY (sub_class) REFERENCES sub_class(id)
 );
 
 CREATE TABLE IF NOT EXISTS attribute (
@@ -109,3 +121,32 @@ CREATE TABLE IF NOT EXISTS character_language (
                REFERENCES language(id)
                ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS class_feature (
+       id INT(11),
+       name VARCHAR(256) NOT NULL,
+       description TEXT NOT NULL,
+       class INT(11),
+       sub_class INT(11),
+       CONSTRAINT class_feature_pk PRIMARY KEY (id),
+       FOREIGN KEY (class)
+               REFERENCES class(id)
+               ON DELETE CASCADE,
+       FOREIGN KEY (sub_class)
+               REFERENCES sub_class(id)
+               ON DELETE CASCADE
+);
+
+-- map the class features for each character
+CREATE TABLE IF NOT EXISTS character_class_feature (
+       player_character INT(11) NOT NULL,
+       class_feature INT(11) NOT NULL,
+       CONSTRAINT character_class_feature_pk PRIMARY KEY (player_character, class_feature),
+       FOREIGN KEY (player_character)
+               REFERENCES player_character(id)
+               ON DELETE CASCADE,
+       FOREIGN KEY (class_feature)
+               REFERENCES class_feature(id)
+               ON DELETE CASCADE
+);
+
