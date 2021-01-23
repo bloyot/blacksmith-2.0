@@ -1,6 +1,6 @@
 (ns dev.core
   (:require [blacksmith.server :refer [-main]]
-            [blacksmith.migration :as migration]
+            [blacksmith.db.migration :as migration]
             [mount.core :as mount]))
 
 (mount/defstate h2-server

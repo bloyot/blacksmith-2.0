@@ -8,6 +8,8 @@
                  [cheshire "5.10.0"]
                  [compojure "1.6.2"]
                  [com.h2database/h2 "1.4.197"]
+                 [com.layerware/hugsql-core "0.5.1"]
+                 [com.layerware/hugsql-adapter-next-jdbc "0.5.1"]
                  [com.mchange/c3p0 "0.9.5.2"]
                  [mount "0.1.16"]
                  [org.clojure/clojure "1.10.0"]

@@ -1,4 +1,4 @@
-(ns blacksmith.migration
+(ns blacksmith.db.migration
   (:require [blacksmith.config :as conf]
             [ragtime.jdbc :as jdbc]
             [ragtime.repl :as repl]))
@@ -13,18 +13,18 @@
 
 (defn migrate
   ([]
-   (repl/migrate (load-config "migrations")))
+   (repl/migrate (load-config "sql/migrations")))
   ([migrations-path]
    (repl/migrate (load-config migrations-path))))
 
 (defn rollback
   ([]
-   (repl/rollback (load-config "migrations")))
+   (repl/rollback (load-config "sql/migrations")))
   ([migrations-path]
    (repl/rollback (load-config migrations-path))))
 
 (defn rollback-all []
-  (let [config (load-config "migrations")]
+  (let [config (load-config "sql/migrations")]
     (repl/rollback config (count (:migrations config )))))
 
 (defn migrate-fixtures

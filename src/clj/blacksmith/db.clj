@@ -11,14 +11,3 @@
   :stop (when (instance? ComboPooledDataSource datasource)
           (.close datasource)))
 
-(defn execute!
-  "Takes a query vector (query string + params) and executes it, returning
-  all values as a result set."
-  [query-v]
-  (jdbc/execute! datasource query-v jdbc/unqualified-snake-kebab-opts))
-
-(defn execute-one!
-  "Takes a query vector (query string + params) and executes it, returning
-  a single value (if present) as a result set."
-  [query-v]
-  (first (jdbc/execute! datasource query-v jdbc/unqualified-snake-kebab-opts)))

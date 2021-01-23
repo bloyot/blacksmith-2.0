@@ -27,16 +27,25 @@ INSERT INTO character_language (player_character, language) VALUES (1, 1);
 INSERT INTO character_language (player_character, language) VALUES (1, 2);
 INSERT INTO character_language (player_character, language) VALUES (1, 4);
 
-INSERT INTO character_class_feature (player_character, class_feature)
-VALUES (1, 8);
-INSERT INTO character_class_feature (player_character, class_feature)
-VALUES (1, 10);
-INSERT INTO character_class_feature (player_character, class_feature)
-VALUES (1, 11);
-INSERT INTO character_class_feature (player_character, class_feature)
-VALUES (1, 1);
-INSERT INTO character_class_feature (player_character, class_feature)
-VALUES (1, 13);
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 8, 1, 1, null);
+
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 10, 1, 1, null);
+
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 11, 2, 1, null);
+
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 1, 4, 1, null);
+
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 13, 5, 1, null);
 
 -- Tod --
 INSERT INTO player_character
