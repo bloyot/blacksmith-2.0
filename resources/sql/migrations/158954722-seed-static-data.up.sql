@@ -213,22 +213,22 @@ VALUES (6, 'school of conjuration', 3);
 -- class features --
 -- TODO add the rest
 INSERT INTO class_feature (id, name, description)
-VALUES (1, 'ability score improvement - strength', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (1, 'ability score improvement - strength', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
-VALUES (2, 'ability score improvement - dexterity', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (2, 'ability score improvement - dexterity', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
-VALUES (3, 'ability score improvement - constitution', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (3, 'ability score improvement - constitution', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
-VALUES (4, 'ability score improvement - intelligence', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (4, 'ability score improvement - intelligence', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
-VALUES (5, 'ability score improvement - wisdom', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (5, 'ability score improvement - wisdom', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
-VALUES (6, 'ability score improvement - charisma', 'You can increase one ability of your choice by 1, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
+VALUES (6, 'ability score improvement - charisma', 'You can increase one ability of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can''t increase an ability score above 20 using this feature.');
 
 INSERT INTO class_feature (id, name, description)
 VALUES (7, 'fighting style - archery', 'You gain a +2 bonus to attack rolls you make with ranged weapons.');

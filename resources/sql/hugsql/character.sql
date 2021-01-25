@@ -49,9 +49,11 @@ limit 1
 -- :name get-classes :? :*
 select
         c.name as class,
+        sc.name as sub_class,
         cc.class_level as level
 from character_class cc
      inner join class c on cc.class = c.id
+     left outer join sub_class sc on cc.sub_class = sc.id
 where cc.player_character = :id
 
 -- :name get-proficiencies :? :*

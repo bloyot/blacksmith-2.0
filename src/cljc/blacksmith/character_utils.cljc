@@ -1,6 +1,15 @@
 (ns blacksmith.character-utils
   (:require [clojure.string :as str]))
 
+(def asi-mapping {:str "ability score improvement - strength" 
+                  :dex "ability score improvement - dexterity" 
+                  :con "ability score improvement - constitution"
+                  :wis "ability score improvement - wisdom"
+                  :int "ability score improvement - intelligence"
+                  :cha "ability score improvement - charisma"} )
+
+(def ability-scores [:str :dex :con :int :wis :cha])
+
 (def saves {:strength :str
             :dexterity :dex
             :constitution :con
@@ -27,12 +36,21 @@
                                 :stealth :dex
                                 :survival :wis}))
 
+(defn class-level
+  "Produce the class, subclass, and level string from the class,
+  i.e. Battle Master Fighter 4"
+  [class]
+  (str
+   (str/capitalize (or (:sub-class class) "")) " "
+   (str/capitalize (:class class)) " "
+   (:level class)))
+
 (defn class-description
   "Combine all classes together into a string"
   [character]
   (str/join
    "/"
-   (map #(str (str/capitalize (:class %)) " " (:level %)) (:classes character))))
+   (map class-level (:classes character))))
 
 (defn details
   "Race, alignment, and, background"
@@ -42,6 +60,21 @@
               (->> (str/split (class character) #"\b")
                    (map str/capitalize)
                    (str/join)))))
+
+(defn asi-modifiers
+  "Return a list of ability score increase information for a given
+  ability-score"
+  [c ability-score-kw]
+  (->> c
+      :features
+      (filter #(= (ability-score-kw asi-mapping) (:name %1)))
+      (reduce (fn [acc {:keys [level name]}]
+                (if (get acc level)
+                  (update-in acc [level :modifier] inc)
+                  {level {:modifier 1
+                          :reason (str name "," " level " level)}}))
+              {})
+      vals))
 
 (defn as->modifier
   "Takes an ability score and returns it's modifier (i.e. 2 or -1)"
