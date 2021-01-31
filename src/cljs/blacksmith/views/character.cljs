@@ -24,6 +24,8 @@
             [reagent.core :as r]
             [re-frame.core :as rf]))
 
+(def tab-values ["details" "proficiencies" "features" "equipment"])
+
 (defn error
   []
   [:div "error"])
@@ -45,25 +47,25 @@
 
 (defn character-tabbed-panel
   [character]
-  (let [selected (r/atom 0)]
-    (fn []
-      [:div
-       [paper {:variant "outlined"}
-        [tabs {:indicatorColor "primary"
-               :textColor "primary"
-               :centered true
-               :value @selected
-               :onChange #(reset! selected %2)}
-         [tab {:label "Details"}]
-         [tab {:label "Proficiencies"}]
-         [tab {:label "Spells and Abilities"}]
-         [tab {:label "Equipment"}]]]
-       [paper 
-        (case @selected
-          0 [character-details/panel character]
-          1 [character-proficiencies/panel character]
-          2 [character-features/panel character]
-          3 [:div "TODO"])]])))
+  (let [selected @(rf/subscribe [::subs/character-tab])
+        selected-idx (.indexOf tab-values selected)]
+    [:div
+     [paper {:variant "outlined"}
+      [tabs {:indicatorColor "primary"
+             :textColor "primary"
+             :centered true
+             :value selected-idx
+             :onChange #(rf/dispatch[::events/character-tab (nth tab-values %2)])}
+       [tab {:label "Details"}]
+       [tab {:label "Proficiencies"}]
+       [tab {:label "Spells and Abilities"}]
+       [tab {:label "Equipment"}]]]
+     [paper 
+      (case selected-idx
+        0 [character-details/panel character]
+        1 [character-proficiencies/panel character]
+        2 [character-features/panel character]
+        3 [:div "TODO"])]]))
 
 (defn character-panel
   [character]
@@ -81,8 +83,8 @@
 (defn character-view
   [character]
   [:div {:class "p-4"}
-   [header character]
-   [character-panel character]])
+     [header character]
+     [character-panel character]])
 
 (defn- fetch-character
   [id]
@@ -94,6 +96,13 @@
 (defn view
   "Render the main view for the single character page"
   [route-params]
+  ;; set the tab based on the hash
+  (let [hash (or
+              ((into #{} tab-values) (utils/hash))
+              "details")]
+    (rf/dispatch [::events/character-tab hash]))
+  
+  ;; render the page
   (let [id (:id route-params)]
     (if-let [character @(rf/subscribe [::subs/character id])]
       [character-view character]

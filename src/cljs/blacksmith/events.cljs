@@ -1,6 +1,7 @@
 (ns blacksmith.events
-  (:require [re-frame.core :as rf]
-            [day8.re-frame.http-fx]))
+  (:require [blacksmith.utils :as utils]
+            [day8.re-frame.http-fx]
+            [re-frame.core :as rf]))
 
 (rf/reg-event-fx
  ::view
@@ -31,3 +32,9 @@
             (assoc-in (flatten [entity-v :status]) :error)
             (update-in entity-v dissoc :data)
             (assoc-in (flatten [entity-v :error]) resp))}))
+
+(rf/reg-event-fx
+ ::character-tab
+ (fn [{db :db} [_ tab]]
+   (utils/set-hash tab)
+   {:db (assoc-in db [:character :tab] tab)}))

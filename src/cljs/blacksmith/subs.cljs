@@ -21,3 +21,8 @@
  ::fetch-status
  (fn [db [_ & entity-v]]
    (get-in db (flatten [entity-v :status]))))
+
+(rf/reg-sub
+ ::character-tab
+ (fn [db [_]]
+   (get-in db [:character :tab])))
