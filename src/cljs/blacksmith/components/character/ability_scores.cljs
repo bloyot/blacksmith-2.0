@@ -13,13 +13,19 @@
             [reagent-material-ui.core.table-row :refer [table-row]]
             [reagent-material-ui.core.tooltip :refer [tooltip]]))
 
+(defn as-tooltip-modifier
+  [modifier]
+  (let [mod-text (formatters/modifier (:modifier modifier))
+        reason-text (:reason modifier)]
+    [text/body (str mod-text " " reason-text)]))
+
 (defn as-tooltip
   [base modifiers]
   [:<>
-   (seq-with-keys modifiers #(identity [text/body (:modifier %)]))
-   #_(for [idx (range (count modifiers))
-         :let [mod (nth modifiers idx)]]
-     ^{:key idx} [text/body (:modifier mod)])])
+   (cons ^{:key -1} [text/body (str "Base: " base)]
+         (if (seq modifiers)
+           (seq-with-keys modifiers #(as-tooltip-modifier %))
+           ^{:key 0} [text/body "No modifiers"]))])
 
 (defn as-value
   [{:keys [base modified modifiers]}]
@@ -29,6 +35,10 @@
     [text/secondary
      (str "(" (formatters/modifier (cutils/as->modifier modified)) ")")]]])
 
+(defn as-cell
+  [content]
+  [table-cell {:align "center"} content])
+
 (defn panel
   [character]
   [:div {:class "bg-white"}
@@ -37,11 +47,7 @@
       [table {:size "small"}
        [table-head
         [table-row
-         (for [as ability-scores]
-           ^{:key (first as)} [table-cell {:align "center"}
-                               (str/upper-case (name (first as)))])]]
+         (seq-with-keys ability-scores #(as-cell (str/upper-case (name (first %)))))]]
        [table-body
         [table-row
-         (for [as ability-scores]
-           ^{:key (first as)} [table-cell {:align "center"}
-                               [as-value (second as)]])]]]])])
+         (seq-with-keys ability-scores #(as-cell (as-value (second %))))]]]])])

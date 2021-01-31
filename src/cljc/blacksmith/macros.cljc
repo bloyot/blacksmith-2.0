@@ -1,9 +1,9 @@
 (ns blacksmith.macros)
 
 (defmacro seq-with-keys
-  "Given a sequence, return a for loop with the keys itm and idx for
-  each element of the sequence, and call the body."
+  "Given a sequence, call the body-fn with each item, attaching the
+  items index as metadata to the result. "
   [seq body-fn]
   `(for [idx# (range (count ~seq))
-         :let [itm# (nth ~seq idx#)]]
+         :let [itm# (nth (seq ~seq) idx#)]]
      (with-meta (~body-fn itm#) {:key idx#})))
