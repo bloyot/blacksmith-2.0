@@ -1,6 +1,14 @@
 (ns blacksmith.formatters
   (:require [clojure.string :as str]))
 
+(defn capitalize-all
+  "Capitalize all words in a string"
+  [string]
+  (as-> string s
+      (str/split s #" ")
+      (map str/capitalize s)
+      (str/join " " s)))
+
 (defn modifier
   "Takes a modifier value like 2 or -1 and returns the formatted string for display
   like +2 or -1"

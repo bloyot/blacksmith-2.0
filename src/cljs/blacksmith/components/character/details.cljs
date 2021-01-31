@@ -1,6 +1,7 @@
 (ns blacksmith.components.character.details
   (:require [blacksmith.formatters :as formatters]
             [blacksmith.components.ui :as ui]
+            [blacksmith.components.text :as text]
             [reagent-material-ui.core.box :refer [box]]
             [reagent-material-ui.core.grid :refer [grid]]
             [reagent-material-ui.core.typography :refer [typography]]))
@@ -49,10 +50,10 @@
   [character]
   [:div
    [ui/accordion
-    "Info" [detail-panel character]]
+    [text/title-5 "Info"] [detail-panel character]]
    [ui/accordion
-    "Attacks" "todo"]
+    [text/title-5 "Attacks"] "todo"]
    [ui/accordion
-    "Race" "todo"]
+    [text/title-5 "Race"] "todo"]
    [ui/accordion
-    "Background" "todo"]])
+    [text/title-5 "Background"] "todo"]])

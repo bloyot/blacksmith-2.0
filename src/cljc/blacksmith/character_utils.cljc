@@ -120,3 +120,21 @@
         as (get-in character [:base-ability-scores stat])]
     (+ (as->modifier as)
        (if prof? (:proficiency-bonus character) 0))))
+
+(defn caster-type
+  [class subclass]
+  (cond
+    (#{:wizard :sorcerer :bard :druid :cleric} class) :full
+    (#{:paladin :ranger} class) :half
+    (#{:arcane-trickster :eldritch-knight} subclass) :thrid
+    (= :warlock class) :warlock))
+
+(defn char-class->subclass
+  "Returns the associated subclass if present for the given class and
+  character."
+  [character class]
+  (->> character
+       :classes
+       (filter #(= class (keyword (:class %))))
+       first
+       :sub-class))

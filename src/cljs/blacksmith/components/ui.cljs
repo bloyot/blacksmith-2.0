@@ -10,7 +10,7 @@
   [title content]
   [rmui-accordion/accordion {:defaultExpanded true}
    [accordion-summary {:expandIcon (r/as-element [expand-more])}
-    [typography {:variant "h5"} title]]
+    title]
    [accordion-details
     content]])
 
