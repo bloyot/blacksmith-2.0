@@ -41,7 +41,8 @@
            :proficiency-bonus (cutils/char->proficiency-bonus c)
            :initiative (cutils/as->modifier dex)
            ;; todo add equipment bonus
-           :armor-class (+ 10 (cutils/as->modifier dex)))))
+           :armor-class (+ 10 (cutils/as->modifier dex))
+           :speed (get cutils/race-speeds (keyword (:race c))))))
 
 (defn rs->character
   "Map a result set to a character"

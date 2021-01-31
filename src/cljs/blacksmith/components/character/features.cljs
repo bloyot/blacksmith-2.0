@@ -28,7 +28,7 @@
      [:div
       (seq-with-keys sorted-features #(feature %))
       (when (cutils/caster-type class sub-class)
-        [spells/panel character])]]))
+        [spells/panel character class sub-class])]]))
 
 (defn panel
   [{:keys [features] :as character}]

@@ -11,7 +11,6 @@ select
        pc.experience,
        pc.hit_point_max,
        r.name as race,
-       r.speed as speed,
        a.name as alignment,
        b.name as background
 from player_character pc 
@@ -36,7 +35,6 @@ select
        pc.experience,
        pc.hit_point_max,
        r.name as race,
-       r.speed as speed,
        a.name as alignment,
        b.name as background
 from player_character pc 

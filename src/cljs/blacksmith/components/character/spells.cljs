@@ -2,5 +2,5 @@
   (:require [blacksmith.components.text :as text]))
 
 (defn panel
-  [character]
-  [text/subtitle-1 "Spellcasting"])
+  [character class sub-class]
+  [text/subtitle-2 "Spellcasting"])

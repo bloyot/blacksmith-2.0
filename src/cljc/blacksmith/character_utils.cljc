@@ -8,6 +8,11 @@
                   :int "ability score improvement - intelligence"
                   :cha "ability score improvement - charisma"} )
 
+(def race-speeds {:human 30
+                  :elf 30
+                  :halfing 25
+                  :dwarf 25})
+
 (def ability-scores [:str :dex :con :int :wis :cha])
 
 (def saves {:strength :str
@@ -138,3 +143,4 @@
        (filter #(= class (keyword (:class %))))
        first
        :sub-class))
+
