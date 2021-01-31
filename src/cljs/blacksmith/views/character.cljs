@@ -1,6 +1,6 @@
 (ns blacksmith.views.character
   (:require [blacksmith.character-utils :as cutils]
-            [blacksmith.components.character.attributes :as character-attributes]
+            [blacksmith.components.character.ability-scores :as character-ability-scores]
             [blacksmith.components.character.details :as character-details]
             [blacksmith.components.character.proficiencies :as character-proficiencies]
             [blacksmith.events :as events]
@@ -74,7 +74,7 @@
     [typography {:variant "subtitle1" :color "textSecondary"}
      (cutils/details character)]]
    [box {:border 1 :borderRadius 3 :borderColor "grey.500"}
-    [character-attributes/panel character]]
+    [character-ability-scores/panel character]]
    [character-tabbed-panel character]])
 
 (defn character-view

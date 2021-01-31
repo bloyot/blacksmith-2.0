@@ -13,3 +13,4 @@
     [typography {:variant "h5"} title]]
    [accordion-details
     content]])
+
