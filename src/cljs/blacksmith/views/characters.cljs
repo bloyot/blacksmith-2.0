@@ -49,7 +49,7 @@
    [grid {:container true :spacing 3}
     (for [character (:content characters)]
       ^{:key (:id character)}
-      [grid {:item true :xs 3} [character-card character]])]])
+      [grid {:item true :xs 4} [character-card character]])]])
 
 (defn characters-view
   []

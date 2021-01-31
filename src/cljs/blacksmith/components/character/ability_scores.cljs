@@ -25,7 +25,7 @@
    (cons ^{:key -1} [text/body (str "Base: " base)]
          (if (seq modifiers)
            (seq-with-keys modifiers #(as-tooltip-modifier %))
-           ^{:key 0} [text/body "No modifiers"]))])
+           '(^{:key 0} [text/body "No modifiers"])))])
 
 (defn as-value
   [{:keys [base modified modifiers]}]

@@ -252,3 +252,8 @@ INSERT INTO class_feature (id, name, description)
 VALUES (13, 'extra attack', 'Beginning at 5th Level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn. The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.
 ');
 
+INSERT INTO class_feature (id, name, description)
+VALUES (14, 'channel divinity: turn undead', 'As an action, you present your holy Symbol and speak a prayer censuring the Undead. Each Undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.
+
+A turned creature must spend its turns trying to move as far away from you as it can, and it can''t willingly move to a space within 30 feet of you. It also can''t take Reactions. For its action, it can use only the Dash action or try to Escape from an Effect that prevents it from moving. If there''s nowhere to move, the creature can use the Dodge action.');
+

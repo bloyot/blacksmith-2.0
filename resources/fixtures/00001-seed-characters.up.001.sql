@@ -47,6 +47,10 @@ INSERT INTO character_class_feature
 (player_character, class_feature, level, class, sub_class)
 VALUES (1, 13, 5, 1, null);
 
+INSERT INTO character_class_feature
+(player_character, class_feature, level, class, sub_class)
+VALUES (1, 14, 2, 2, null);
+
 -- Tod --
 INSERT INTO player_character
 (id, name, race, base_str, base_dex, base_con, base_int, base_wis,

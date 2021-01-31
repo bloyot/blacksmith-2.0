@@ -55,9 +55,10 @@
      derived-stats))
 
 (defn get-all
-  []
-  ;; TODO fix the n+1 problem by loading all the sub queries together
-  (map rs->character (char-db/get-all datasource)))
+  ([] (get-all 20)) ; default limit 20
+  ([limit]
+   ;; TODO fix the n+1 problem by loading all the sub queries together
+   (map rs->character (char-db/get-all datasource {:limit limit}))))
 
 (defn get-one
   "Returns the character, or nil if not found in the db"

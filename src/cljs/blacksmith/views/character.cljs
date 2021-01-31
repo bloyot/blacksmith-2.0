@@ -2,6 +2,7 @@
   (:require [blacksmith.character-utils :as cutils]
             [blacksmith.components.character.ability-scores :as character-ability-scores]
             [blacksmith.components.character.details :as character-details]
+             [blacksmith.components.character.features :as character-features]
             [blacksmith.components.character.proficiencies :as character-proficiencies]
             [blacksmith.events :as events]
             [blacksmith.formatters :as formatters]
@@ -61,7 +62,7 @@
         (case @selected
           0 [character-details/panel character]
           1 [character-proficiencies/panel character]
-          2 [:div "TODO"]
+          2 [character-features/panel character]
           3 [:div "TODO"])]])))
 
 (defn character-panel
