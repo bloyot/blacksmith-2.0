@@ -127,11 +127,11 @@
        (if prof? (:proficiency-bonus character) 0))))
 
 (defn caster-type
-  [class subclass]
+  [class sub-class]
   (cond
     (#{:wizard :sorcerer :bard :druid :cleric} class) :full
     (#{:paladin :ranger} class) :half
-    (#{:arcane-trickster :eldritch-knight} subclass) :thrid
+    (#{:arcane-trickster :eldritch-knight} sub-class) :thrid
     (= :warlock class) :warlock))
 
 (defn char-class->subclass
@@ -144,3 +144,18 @@
        first
        :sub-class))
 
+(defn class->spell-attribute
+  "Maps class to it's primary spellcasting attribute"
+  [class]
+  (cond
+    (= :wizard class) :int
+    (#{:druid :cleric :paladin :ranger} class) :wis
+    (#{:sorcerer :bard :warlock} class)  :cha))
+
+(defn char-class->level
+  [character class]
+  (->> character
+       :classes
+       (filter #(= class (keyword (:class %))))
+       first
+       :level))

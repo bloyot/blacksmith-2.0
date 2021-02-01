@@ -16,6 +16,14 @@
   [content]
   [text content "body1" "textSecondary"])
 
+(defn blue
+  [content]
+  [text content "body1" "primary"])
+
+(defn red
+  [content]
+  [text content "body1" "secondary"])
+
 (defn title-5
   [content]
   [text content "h5"])

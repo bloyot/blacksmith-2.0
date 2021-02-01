@@ -76,7 +76,7 @@
      (cutils/class-description character)]
     [typography {:variant "subtitle1" :color "textSecondary"}
      (cutils/details character)]]
-   [box {:border 1 :borderRadius 3 :borderColor "grey.500"}
+   [box {:border 1 :borderRadius 3 :borderColor "gray.500"}
     [character-ability-scores/panel character]]
    [character-tabbed-panel character]])
 

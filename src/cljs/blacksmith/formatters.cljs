@@ -1,6 +1,13 @@
 (ns blacksmith.formatters
   (:require [clojure.string :as str]))
 
+(def ability-score-names {:str "Strength"
+                          :dex "Dexterity"
+                          :con "Constitution"
+                          :wis "Wisdom"
+                          :int "Intelligence"
+                          :cha "Charsima"} )
+
 (defn capitalize-all
   "Capitalize all words in a string"
   [string]
